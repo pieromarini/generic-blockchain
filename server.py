@@ -2,6 +2,9 @@ from flask import Flask, jsonify, request
 from uuid import uuid4
 from blockchain import Blockchain
 
+HOST = '0.0.0.0'
+PORT = 5000
+
 app = Flask(__name__)
 
 node_identifier = str(uuid4()).replace('-', '')
@@ -25,19 +28,20 @@ def register_nodes():
     }
     return jsonify(response), 201
 
+
 @app.route('/nodes/resolve', methods=['GET'])
-def consensus():
+def resolve_consensus():
     replaced = blockchain.resolve_conflicts()
     if replaced:
         response = {
-                'message': 'Our chain was replaced',
-                'new_chain': blockchain.chain
-                }
+            'message': 'Our chain was replaced',
+            'new_chain': blockchain.chain
+        }
     else:
         response = {
-                'message': 'Our chain is authoritative',
-                'chain': blockchain.chain
-                }
+            'message': 'Our chain is authoritative',
+            'chain': blockchain.chain
+        }
     return jsonify(response), 200
 
 
@@ -87,4 +91,4 @@ def full_chain():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host=HOST, port=PORT)
