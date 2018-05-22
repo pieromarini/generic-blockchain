@@ -10,11 +10,11 @@
 
 ### API Endpoints
 
-* /nodes/register
-* /nodes/resolve
-* /mine
-* /transactions/new
-* /chain
+* /nodes/register GET
+* /nodes/resolve GET
+* /mine GET
+* /chain GET
+* /transactions/new POST
 
 ```bash
 # Mine a new Block
@@ -23,6 +23,7 @@ curl http://0.0.0.0:5000/mine
 # Visualize the chain
 curl http://0.0.0.0:5000/chain
 
-curl -X POST -H "Content-Type: application/json" "http://0.0.0.0:5000/transactions/new" -d '{ "sender": "ADDRESS", "recipient": "OTHER-ADDRESS", "amount": 2 }' 
-
+# Add a new Transaction
+curl -X POST -H "Content-Type: application/json" "http://0.0.0.0:5000/transactions/new" \
+	-d '{ "sender": "ADDRESS", "recipient": "OTHER-ADDRESS", "amount": 2 }' 
 ```
